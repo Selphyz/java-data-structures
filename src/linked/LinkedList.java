@@ -1,7 +1,5 @@
 package linked;
 
-import org.w3c.dom.Node;
-
 public class LinkedList {
     private class Node {
         Integer value;
@@ -23,7 +21,71 @@ public class LinkedList {
             temp = temp.next;
         }
     }
-
+    public Node get(int index) {
+        if(index < 0 || index >= length){
+            return null;
+        }
+        Node temp = head;
+        for (int i = 0; i < index; i++) {
+            temp = temp.next;
+        }
+        return temp;
+    }
+    public boolean set(int index, int val) {
+        Node temp = get(index);
+        if(temp != null){
+            temp.value = val;
+            return true;
+        }
+        return true;
+    }
+    public boolean insert(int index, int val) {
+        if(index <0|| index > length){
+            return false;
+        }
+        if(index==0){
+            prepend(val);
+            return true;
+        }
+        if (index==length){
+            append(val);
+            return true;
+        }
+        Node insert = new Node(val);
+        Node temp = get(index-1);
+        insert.next = temp.next;
+        temp.next = insert;
+        length++;
+        return true;
+    }
+    public boolean remove(int index) {
+        if(index<0||index>=length){
+            return false;
+        }
+        if(index==0){
+            removeFirst();
+            return true;
+        }
+        Node temp = get(index-1);
+        Node toRemove = temp.next;
+        temp.next = toRemove.next;
+        toRemove=null;
+        length--;
+        return true;
+    }
+    public void reverse(){
+        Node temp = head;
+        head = tail;
+        tail = temp;
+        Node next = temp.next;
+        Node before = null;
+        for (int i = 0; i < length; i++) {
+            next = temp.next;
+            temp.next = before;
+            before = temp;
+            temp = next;
+        }
+    }
     public void getHead() {
         System.out.println("Head: " + head.value);
     }
